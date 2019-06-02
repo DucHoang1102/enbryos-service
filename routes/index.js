@@ -25,11 +25,11 @@ routerGroup.get('/embryos/:id/sizes', sizesController.view);
 
 routerGroup.post('/embryos/:id/sizes', sizesController.new);
 
-routerGroup.get('/embryos/:id/sizes/:name', sizesController.details);
+routerGroup.get('/embryos/:id/sizes/:id_size', sizesController.details);
 
-routerGroup.put('/embryos/:id/sizes/:name', sizesController.update);
+routerGroup.put('/embryos/:id/sizes/:id_size', sizesController.update);
 
-routerGroup.delete('/embryos/:id/sizes/:name', sizesController.delete);
+routerGroup.delete('/embryos/:id/sizes/:id_size', sizesController.delete);
 
 /*
  * Router index
