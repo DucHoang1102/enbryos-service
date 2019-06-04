@@ -2,16 +2,15 @@ var mongoose        = require('mongoose'),
     uniqueValidator = require('mongoose-unique-validator');
 
 var EmbryosSchema = new mongoose.Schema({
-    _id: {type: String, required: true, uppercase: true},
+    _id: {type: String, required: true, uppercase: true, unique: true},
     name: {type: String, default: null},
     description: {type: String, default: null},
-    buy_price: {type: Number, default: null},
     sizes: [
         {
-            name: {type: String, uppercase: true},
+            name: {type: String, uppercase: true, required: true, unique: true},
             description: {type: String, default: null},
-            buy_price: {type: Number, default: null},
-            amount: {type: Number, default: null},
+            buy_price: {type: Number, default: null, min: 0},
+            amount: {type: Number, default: null, min: 0},
             dim: {
                 height_min: {type: Number, default: null},
                 height_max: {type: Number, default: null},
@@ -24,29 +23,4 @@ var EmbryosSchema = new mongoose.Schema({
 
 EmbryosSchema.plugin(uniqueValidator, 'is already exist.');
 
-EmbryosSchema.methods.checkSizeEmbryosUnique = function(size) {
-    var error = new Error();
-
-    if (!size.name) {
-        error.message = "Field: `name` is empty or undefined";
-        throw error;
-    }
-
-    for(let s of this.sizes) {
-        if (size.name.toUpperCase() === s.name) {
-            error.message = "Field: `name` is unique";
-            throw error;
-            break;
-        }
-    }
-
-    return 1;
-};
-
-EmbryosSchema.methods.getSizeEmbryos = function() {
-    return {
-        sizes: this.sizes
-    };
-};
-
-mongoose.model('Embryos', EmbryosSchema);
+module.exports = mongoose.model('Embryos', EmbryosSchema);
