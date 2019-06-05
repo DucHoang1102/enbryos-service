@@ -9,13 +9,13 @@ var EmbryosSchema = new mongoose.Schema({
         {
             name: {type: String, uppercase: true, required: true, unique: true},
             description: {type: String, default: null},
-            buy_price: {type: Number, default: null, min: 0},
-            amount: {type: Number, default: null, min: 0},
+            buy_price: {type: Number, min: 0, default: null},
+            amount: {type: Number, min: 0, default: null},
             dim: {
-                height_min: {type: Number, default: null},
-                height_max: {type: Number, default: null},
-                weight_min: {type: Number, default: null},
-                weight_max: {type: Number, default: null},
+                height_min: {type: Number, min: 0, default: null},
+                height_max: {type: Number, min: 0, default: null},
+                weight_min: {type: Number, min: 0, default: null},
+                weight_max: {type: Number, min: 0, default: null},
             }
         }
     ],
