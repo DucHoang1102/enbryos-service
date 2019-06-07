@@ -30,6 +30,11 @@ exports.details = function (req, res, next) {
 };
 
 exports.update = function (req, res, next) {
+    Embryos.findOneAndUpdate({ id: req.params.id }, req.body.embryos, { new: true }).then(results => {
+        return res.json({results: results});
+    }).catch(err => {
+        return res.json({errors: err});
+    });
 };
 
 exports.delete = function (req, res, next) {

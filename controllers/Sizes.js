@@ -5,75 +5,22 @@ exports.view = function (req, res, next) {
 };
 
 exports.new = function (req, res, next) {
-    Embryos.findById(req.params.id).exec().then(embryos => {
-        if (!embryos) return res.json({embryos: null});
+    Embryos.findOne({ id: req.params.id }).exec().then(embryos => {
+        if (!embryos) return res.json({ embryos: null });
 
-        embryos.checkSizeEmbryosUnique(req.body.size);
-
-        embryos.update(
-            { $push: { sizes: req.body.size } },
-            { new: true }
-        ).exec().then(results => {
-            console.log(results);
-            return res.json({
-                embryos: results
+        if (embryos.checkSizeIsUniqueAndRequired(req.body.size)) {
+            Embryos.findOneAndUpdate(
+                { id: req.params.id }, 
+                {$push: {sizes: req.body.size}}, 
+                { new: true }, 
+                (err, embryos) => {
+                    return res.json({ sizes: embryos.sizes });
             });
-        }).catch(err => {
-            return res.json({
-                errors: err
-            });
-        });
+        }
 
     }).catch(err => {
-        return res.json({
-            errors: err
-        });
+        return res.json({ errors: err.message });
     });
-
-    // Embryos.findById(req.params.id).exec().then(embryos => {
-    //     if (!embryos) return res.json()
-
-    //     embryos.checkSizeUnique(req.body.size);
-    // }).catch(err => {
-    //     return res.json( { errors: err } );
-    // });
-
-    // Embryos.findOneAndUpdate(
-    //     { _id: req.params.id }, 
-    //     { $push: { sizes: req.body.size } },
-    //     { new: true }
-
-    // ).exec().then(results => {
-    //     return res.json( { size: results.sizes } );
-
-    // }).catch(err => {
-    //     return res.json( { errors: err } );
-    // });
-
-    // Embryos.findById(req.params.id).exec().then(embryos => {
-    //     if (embryos) {
-    //         embryos.sizes.push(req.body.size);
-
-    //         embryos.save().then(results => {
-    //             return res.json({
-    //                 sizes: embryos.sizes
-    //             });
-    //         }).catch(err => {
-    //             return res.json({
-    //                 errors: err
-    //             });
-    //         });
-    //     } 
-    //     else {
-    //         return res.json({
-    //             embryos: embryos
-    //         })
-    //     }
-    // }).catch(err => {
-    //     return res.json({
-    //         errors: err
-    //     });
-    // });
 };
 
 exports.details = function (req, res, next) {

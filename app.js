@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // MongoDB
-mongoose.connect(process.env.DB_URI || 'mongodb://localhost/test');
+mongoose.connect(process.env.DB_URI || 'mongodb://localhost/test', {useNewUrlParser: true});
 
 require('./models');
 app.use(require('./routes'));
