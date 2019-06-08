@@ -1,7 +1,6 @@
 var routerIndex = require('express').Router();
 var routerGroup = require('express').Router();
 var embryosController = require('../controllers/Embryos');
-var sizesController = require('../controllers/Sizes');
 
 /*
  * Router for embryos
@@ -17,19 +16,6 @@ routerGroup.get('/embryos/:id', embryosController.details);
 routerGroup.put('/embryos/:id', embryosController.update);
 
 routerGroup.delete('/embryos/:id', embryosController.delete);
-
-/*
- * Router for sizes of embryos
- */
-routerGroup.get('/embryos/:id/sizes', sizesController.view);
-
-routerGroup.post('/embryos/:id/sizes', sizesController.new);
-
-routerGroup.get('/embryos/:id/sizes/:id_size', sizesController.details);
-
-routerGroup.put('/embryos/:id/sizes/:id_size', sizesController.update);
-
-routerGroup.delete('/embryos/:id/sizes/:id_size', sizesController.delete);
 
 /*
  * Router index
