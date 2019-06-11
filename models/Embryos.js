@@ -24,7 +24,8 @@ var EmbryosSchema = new mongoose.Schema({
 EmbryosSchema.plugin(uniqueValidator, 'is already exist.');
 
 // Check list sizes of req.body.embryos.sizes is unique
-var checkSizesUnique = function(list) {
+var checkSizesUnique = function(emrbyos) {
+    var list = emrbyos.sizes;
     var listSize = [];
 
     if (list && list.length >= 1) {
@@ -33,7 +34,7 @@ var checkSizesUnique = function(list) {
                 listSize.push(list[i].name);
             }
             else {
-                throw new Error('`sizes.name` is unique');
+                throw emrbyos.invalidate('Sizes.name', 'Error, expected `{PATH}` to be unique. Value: `{VALUE}`', list[i].name, 'unique');
                 break;
             }
         }
@@ -42,7 +43,7 @@ var checkSizesUnique = function(list) {
 
 
 EmbryosSchema.pre('save', function(next) {
-    checkSizesUnique(this.sizes);
+    checkSizesUnique(this);
 
     next();
 });

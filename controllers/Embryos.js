@@ -47,7 +47,7 @@ exports.new = function (req, res, next) {
 
 exports.details = function (req, res, next) {
     Embryos.findOne({ id: req.params.id }).exec().then(results => {
-        if (!results) return res.json({ embryos: null });
+        if (!results) throw new Error('Embryos not found');
 
         return res.json({ embryos: results });
     }).catch(err => {
@@ -59,19 +59,19 @@ exports.update = function (req, res, next) {
     Embryos.findOne({ id: req.params.id }).then(embryos => {
         if (!embryos) throw new Error('Embryos not found');
 
-        if (req.body.embryos.id !== 'undefined') {
+        if (typeof req.body.embryos.id !== 'undefined') {
             embryos.id = req.body.embryos.id;
         }
 
-        if (req.body.embryos.name !== 'undefined') {
+        if (typeof req.body.embryos.name !== 'undefined') {
             embryos.name = req.body.embryos.name;
         }
 
-        if (req.body.embryos.description !== 'undefined') {
+        if (typeof req.body.embryos.description !== 'undefined') {
             embryos.description = req.body.embryos.description;
         }
 
-        if (req.body.embryos.sizes !== 'undefined' ) {
+        if (typeof req.body.embryos.sizes !== 'undefined' ) {
             embryos.sizes = req.body.embryos.sizes;
         }
 
@@ -88,7 +88,7 @@ exports.update = function (req, res, next) {
 
 exports.delete = function (req, res, next) {
     Embryos.findOneAndRemove({ id: req.params.id }).exec().then(results => {
-        if (!results) return res.json({ embryos: null });
+        if (!results) throw new Error('Embryos not found');
 
         return res.json({ embryos: results });
     }).catch(err => {
