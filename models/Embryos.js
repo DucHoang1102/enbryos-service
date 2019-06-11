@@ -3,19 +3,19 @@ var mongoose        = require('mongoose'),
 
 var EmbryosSchema = new mongoose.Schema({
     id: {type: String, required: true, uppercase: true, unique: true, trim: true},
-    name: {type: String, default: null},
-    description: {type: String, default: null},
+    name: {type: String, default: ""},
+    description: {type: String, default: ""},
     sizes: [
         {
             name: {type: String, uppercase: true, required: true, index: true, trim: true},
-            description: {type: String, default: null},
-            buy_price: {type: Number, min: 0, default: null},
-            amount: {type: Number, min: 0, default: null},
+            description: {type: String, default: ""},
+            buy_price: {type: Number, min: 0, default: 0},
+            amount: {type: Number, min: 0, default: 0},
             dim: {
-                height_min: {type: Number, min: 0, default: null},
-                height_max: {type: Number, min: 0, default: null},
-                weight_min: {type: Number, min: 0, default: null},
-                weight_max: {type: Number, min: 0, default: null},
+                height_min: {type: Number, min: 0, default: 0},
+                height_max: {type: Number, min: 0, default: 0},
+                weight_min: {type: Number, min: 0, default: 0},
+                weight_max: {type: Number, min: 0, default: 0},
             }
         }
     ],
@@ -23,31 +23,26 @@ var EmbryosSchema = new mongoose.Schema({
 
 EmbryosSchema.plugin(uniqueValidator, 'is already exist.');
 
-// Check list sizes of req.body.embryos.sizes
+// Check list sizes of req.body.embryos.sizes is unique
 var checkSizesUnique = function(list) {
     var listSize = [];
-    if (list.length >= 2) {
+
+    if (list && list.length >= 1) {
         for(let i = 0; i < list.length; i++) {
-            if (!listSize.includes(list[i].name)){
+            if (!listSize.includes(list[i].name)) {
                 listSize.push(list[i].name);
             }
             else {
-                throw new Error('`name` is require in `sizes`');
+                throw new Error('`sizes.name` is unique');
                 break;
             }
         }
     }
 }
 
-EmbryosSchema.pre('validate', function(next) {
+
+EmbryosSchema.pre('save', function(next) {
     checkSizesUnique(this.sizes);
-
-    next();
-});
-
-EmbryosSchema.pre('findOneAndUpdate', function(next){
-    console.log(this._update.sizes);
-    checkSizesUnique(this._update.sizes);
 
     next();
 });

@@ -56,13 +56,31 @@ exports.details = function (req, res, next) {
 };
 
 exports.update = function (req, res, next) {
-    Embryos.findOneAndUpdate(
-        { id: req.params.id }, req.body.embryos, 
-        { useFindAndModify: false, new: true }
-    ).exec().then(results => {
-        if (!results) return res.json({ embryos: null });
+    Embryos.findOne({ id: req.params.id }).then(embryos => {
+        if (!embryos) throw new Error('Embryos not found');
 
-        return res.json({ embryos: results });
+        if (req.body.embryos.id !== 'undefined') {
+            embryos.id = req.body.embryos.id;
+        }
+
+        if (req.body.embryos.name !== 'undefined') {
+            embryos.name = req.body.embryos.name;
+        }
+
+        if (req.body.embryos.description !== 'undefined') {
+            embryos.description = req.body.embryos.description;
+        }
+
+        if (req.body.embryos.sizes !== 'undefined' ) {
+            embryos.sizes = req.body.embryos.sizes;
+        }
+
+        embryos.save().then(embryos => {
+            return res.json({ embryos: embryos });
+        }).catch(err => {
+            return res.json({ errors: err.message });
+        });
+
     }).catch(err => {
         return res.json({ errors: err.message });
     });
