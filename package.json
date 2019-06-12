@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha --timeout 10000",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "seed": "node models/seeding/DatabaseSeeder.js",
+    "dropC": "node models/seeding/DropCollection.js"
   },
   "repository": {
     "type": "git",
