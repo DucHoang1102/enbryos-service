@@ -2,7 +2,8 @@ var chai      = require('chai'),
     chaiHttp  = require('chai-http'),
     assert    = chai.assert,
     expect    = chai.expect,
-    uriTest   = 'http://localhost:8080';
+    dotenv    = require('dotenv').config({path: './.env'}),
+    uriTest   = process.env.APP_URL + ':' + process.env.APP_PORT;
 
 chai.use(chaiHttp);
 

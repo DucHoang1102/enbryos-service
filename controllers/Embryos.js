@@ -39,9 +39,7 @@ exports.new = function (req, res, next) {
             embryos: results
         });
     }).catch(err => {
-        return res.json({
-            errors: err.message
-        });
+        return res.json({ errors: err.message });
     });
 };
 

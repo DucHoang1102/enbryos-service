@@ -1,7 +1,8 @@
-var mongoose  = require('mongoose');
+var mongoose  = require('mongoose'),
+    dotenv    = require('dotenv').config({path: './.env'});
 
 setTimeout(function(){
-    mongoose.connect('mongodb://localhost/embryos', {useNewUrlParser: true});
+    mongoose.connect(process.env.DB_URI, {useNewUrlParser: true});
     mongoose.connection.dropCollection('embryos', function(err, results){
         if (results) console.log('Drop collection success');
         mongoose.connection.close();
