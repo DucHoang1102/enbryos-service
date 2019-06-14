@@ -26,9 +26,8 @@ exports.view = function (req, res, next) {
         var embryos = results[0];
 
         return res.json({ embryos: results });
-    }).catch(err => {
-        return res.json({ errors: err.message });
-    });
+
+    }).catch( err => res.json({ errors: err.message }) );
 };
 
 exports.new = function (req, res, next) {
@@ -38,9 +37,8 @@ exports.new = function (req, res, next) {
         return res.json({
             embryos: results
         });
-    }).catch(err => {
-        return res.json({ errors: err.message });
-    });
+
+    }).catch( err => res.json({ errors: err.message }) );
 };
 
 exports.details = function (req, res, next) {
@@ -48,9 +46,8 @@ exports.details = function (req, res, next) {
         if (!results) throw new Error('Embryos not found');
 
         return res.json({ embryos: results });
-    }).catch(err => {
-        return res.json({ errors: err.message });
-    });
+
+    }).catch( err => res.json({ errors: err.message }) );
 };
 
 exports.update = function (req, res, next) {
@@ -75,13 +72,10 @@ exports.update = function (req, res, next) {
 
         embryos.save().then(embryos => {
             return res.json({ embryos: embryos });
-        }).catch(err => {
-            return res.json({ errors: err.message });
-        });
+            
+        }).catch( err => res.json({ errors: err.message }) );
 
-    }).catch(err => {
-        return res.json({ errors: err.message });
-    });
+    }).catch( err => res.json({ errors: err.message }) );
 };
 
 exports.delete = function (req, res, next) {
@@ -89,7 +83,6 @@ exports.delete = function (req, res, next) {
         if (!results) throw new Error('Embryos not found');
 
         return res.json({ embryos: results });
-    }).catch(err => {
-        return res.json({ errors: err.message });
-    });
+
+    }).catch( err => res.json({ errors: err.message }) );
 };
