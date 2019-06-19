@@ -1,5 +1,6 @@
 var mongoose        = require('mongoose'),
-    uniqueValidator = require('mongoose-unique-validator');
+    uniqueValidator = require('mongoose-unique-validator'),
+    slug            = require('slug');
 
 var EmbryosSchema = new mongoose.Schema({
     id: {type: String, required: true, uppercase: true, unique: true, trim: true},
@@ -24,8 +25,8 @@ var EmbryosSchema = new mongoose.Schema({
 EmbryosSchema.plugin(uniqueValidator, 'is already exist.');
 
 // Check list sizes of req.body.embryos.sizes is unique
-var checkSizesUnique = function(emrbyos) {
-    var list = emrbyos.sizes;
+var checkSizesUnique = function(embryos) {
+    var list = embryos.sizes;
     var listSize = [];
 
     if (list && list.length >= 1) {
@@ -34,16 +35,27 @@ var checkSizesUnique = function(emrbyos) {
                 listSize.push(list[i].name);
             }
             else {
-                throw emrbyos.invalidate('Sizes.name', 'Error, expected `{PATH}` to be unique. Value: `{VALUE}`', list[i].name, 'unique');
+                throw embryos.invalidate('Sizes.name', 'Error, expected `{PATH}` to be unique. Value: `{VALUE}`', list[i].name, 'unique');
                 break;
             }
         }
     }
 }
 
+// Code say:
+var checkIdCharmap = function(embryos) {
+    if(embryos.id) {
+        var id = embryos.id.toString().trim().toUpperCase();
+
+        if( id !== slug( id, {replacement: '', remove: /[-_.]/g} ) )
+            throw embryos.invalidate('id', 'Error, `{PATH}` cannot contain space and charmaps. Value: `{VALUE}`', id, 'unique');
+    }
+}
+
 
 EmbryosSchema.pre('save', function(next) {
     checkSizesUnique(this);
+    checkIdCharmap(this);
 
     next();
 });

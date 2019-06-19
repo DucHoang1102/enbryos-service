@@ -41,6 +41,20 @@ var listData = [
   },
 //-------------------------------------------------------------------------------
 {
+    it     : 'CASE: 1. Id embryos update unsuccessful because it does not contain spaces and charmaps',
+    id     : 'ct222',
+    send   : {'embryos': {'id': 'âct333'}},
+    matched: {'errors': 'Embryos validation failed: id: Error, `id` cannot contain space and charmaps. Value: `ÂCT333`'}
+  },
+//-------------------------------------------------------------------------------
+{
+    it     : 'CASE: 2. Id embryos update unsuccessful because it does not contain spaces and charmaps',
+    id     : 'ct222',
+    send   : {'embryos': {'id': '_DT.111-'}},
+    matched: {'errors': 'Embryos validation failed: id: Error, `id` cannot contain space and charmaps. Value: `_DT.111-`'}
+  },
+//-------------------------------------------------------------------------------
+{
     it     : 'CASE: Sizes.name update success',
     id     : 'ct222',
     send   : { 'embryos': { 'sizes': [ {'name': ' s  '}, {'name': ' m  '}  ] } },

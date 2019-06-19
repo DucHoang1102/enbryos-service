@@ -26,6 +26,42 @@ var listData = [
   },
 //-------------------------------------------------------------------------------
   {
+    it     : 'CASE: 1. Id embryos does not contain spaces and charmaps',
+    send   : {'embryos': {'id': 'âbcd'}},
+    matched: {'errors': 'Embryos validation failed: id: Error, `id` cannot contain space and charmaps. Value: `ÂBCD`'}
+  },
+//-------------------------------------------------------------------------------
+  {
+    it     : 'CASE: 2. Id embryos does not contain spaces and charmaps',
+    send   : {'embryos': {'id': 'aa aa'}},
+    matched: {'errors': 'Embryos validation failed: id: Error, `id` cannot contain space and charmaps. Value: `AA AA`'}
+  },
+//-------------------------------------------------------------------------------
+  {
+    it     : 'CASE: 3. Id embryos does not contain spaces and charmaps',
+    send   : {'embryos': {'id': 'ct-1'}},
+    matched: {'errors': 'Embryos validation failed: id: Error, `id` cannot contain space and charmaps. Value: `CT-1`'}
+  },
+//-------------------------------------------------------------------------------
+  {
+    it     : 'CASE: 4. Id embryos does not contain spaces and charmaps',
+    send   : {'embryos': {'id': '_ct1'}},
+    matched: {'errors': 'Embryos validation failed: id: Error, `id` cannot contain space and charmaps. Value: `_CT1`'}
+  },
+//-------------------------------------------------------------------------------
+  {
+    it     : 'CASE: 5. Id embryos does not contain spaces and charmaps',
+    send   : {'embryos': {'id': 'ct1@|}'}},
+    matched: {'errors': 'Embryos validation failed: id: Error, `id` cannot contain space and charmaps. Value: `CT1@|}`'}
+  },
+//-------------------------------------------------------------------------------
+  {
+    it     : 'CASE: 6. Id embryos does not contain spaces and charmaps',
+    send   : {'embryos': {'id': 'ct1.ct2'}},
+    matched: {'errors': 'Embryos validation failed: id: Error, `id` cannot contain space and charmaps. Value: `CT1.CT2`'}
+  },
+//-------------------------------------------------------------------------------
+  {
     it     : 'CASE: Id embryos is unique',
     send   : {'embryos': {'id': 'ct1'}},
     matched: {'errors': 'Embryos validation failed: id: Error, expected `id` to be unique. Value: `CT1`'}
@@ -45,7 +81,7 @@ var listData = [
   },
 //-------------------------------------------------------------------------------
   {
-    it     : 'CASE: Sizes.name embryos is required 1',
+    it     : 'CASE: 1. Sizes.name embryos is required',
     send   : {
                 'embryos': {
                   'id': 'ct3',
@@ -59,7 +95,7 @@ var listData = [
   },
 //-------------------------------------------------------------------------------
   {
-    it     : 'CASE: Sizes.name embryos is required 2',
+    it     : 'CASE: 2. Sizes.name embryos is required',
     send   : {
                 'embryos': {
                   'id': 'ct4',
