@@ -72,7 +72,7 @@ var listData = [
     it     : 'CASE: Sizes.name update unsuccessful because Sizes.name is unique',
     id     : 'ct222',
     send   : { 'embryos': { 'sizes': [ {'name': 'm'}, {'name': 'm'}  ] } },
-    matched: {'errors': 'Embryos validation failed: Sizes.name: Error, expected `Sizes.name` to be unique. Value: `M`'}
+    matched: {'errors': 'Embryos validation failed: sizes: Error, expected `Sizes.name` to be unique. Value: `M`'}
   },
 //-------------------------------------------------------------------------------
 ]

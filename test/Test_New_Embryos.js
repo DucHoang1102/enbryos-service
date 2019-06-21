@@ -119,7 +119,7 @@ var listData = [
                     ]
                 }
             },
-    matched: {'errors': 'Embryos validation failed: Sizes.name: Error, expected `Sizes.name` to be unique. Value: `S`'}
+    matched: {'errors': 'Embryos validation failed: sizes: Error, expected `Sizes.name` to be unique. Value: `S`'}
   }
 ]
 
