@@ -25,7 +25,7 @@ exports.view = function (req, res, next) {
     Promise.all([results]).then(results => {
         var embryos = results[0];
 
-        return res.json({ embryos: results });
+        return res.json({ embryos: embryos });
 
     }).catch( err => res.json({ errors: err.message }) );
 };
